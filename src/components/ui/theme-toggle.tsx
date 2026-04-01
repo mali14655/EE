@@ -3,8 +3,6 @@
 import { useEffect, useState } from "react";
 import { Moon, Sun } from "lucide-react";
 
-import { cn } from "../../lib/utils";
-
 interface ThemeToggleProps {
   className?: string;
 }
@@ -12,16 +10,48 @@ interface ThemeToggleProps {
 const STORAGE_KEY = "ee-theme";
 
 export function ThemeToggle({ className }: ThemeToggleProps) {
-  const [isDark, setIsDark] = useState(false);
+  const [isDark, setIsDark] = useState(() => {
+    if (typeof document !== "undefined") {
+      return document.documentElement.classList.contains("dark");
+    }
+    if (typeof window !== "undefined") {
+      return window.localStorage.getItem(STORAGE_KEY) === "dark";
+    }
+    return false;
+  });
 
-  // Initialise from localStorage on first mount
+  // Initialise from localStorage/class on first mount
+  useEffect(() => {
+    if (typeof window === "undefined" || typeof document === "undefined") return;
+    const stored = window.localStorage.getItem(STORAGE_KEY);
+    const startDark = stored ? stored === "dark" : document.documentElement.classList.contains("dark");
+    setIsDark(startDark);
+  }, []);
+
+  // Keep all toggle instances in sync across the app and browser tabs
   useEffect(() => {
     if (typeof window === "undefined") return;
-    const stored = window.localStorage.getItem(STORAGE_KEY);
-    
-    // Default to light mode if no stored preference
-    const startDark = stored ? stored === "dark" : false;
-    setIsDark(startDark);
+
+    const handleThemeChange = (event: Event) => {
+      const custom = event as CustomEvent<{ isDark?: boolean }>;
+      const next = custom.detail?.isDark;
+      if (typeof next === "boolean") {
+        setIsDark(next);
+      }
+    };
+
+    const handleStorage = (event: StorageEvent) => {
+      if (event.key !== STORAGE_KEY) return;
+      setIsDark(event.newValue === "dark");
+    };
+
+    window.addEventListener("ee-theme-change", handleThemeChange as EventListener);
+    window.addEventListener("storage", handleStorage);
+
+    return () => {
+      window.removeEventListener("ee-theme-change", handleThemeChange as EventListener);
+      window.removeEventListener("storage", handleStorage);
+    };
   }, []);
 
   // Apply theme to <html> and persist, and notify listeners
@@ -48,45 +78,25 @@ export function ThemeToggle({ className }: ThemeToggleProps) {
   }
 
   return (
-    <div
-      className={cn(
-        "flex h-8 w-16 cursor-pointer rounded-full border border-zinc-800 bg-zinc-950 p-[3px] transition-all duration-300 ease-out",
-        !isDark && "border-zinc-200 bg-white shadow-sm",
-        className
-      )}
+    <button
+      type="button"
+      className={`ee-theme-toggle ${isDark ? "ee-theme-toggle-dark" : "ee-theme-toggle-light"} ${className ?? ""}`}
       onClick={handleToggle}
-      role="button"
-      tabIndex={0}
-      onKeyDown={(e) => {
-        if (e.key === "Enter" || e.key === " ") {
-          e.preventDefault();
-          handleToggle();
-        }
-      }}
+      aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
     >
-      <div className="flex w-full items-center justify-between px-[1px]">
-        <div
-          className={cn(
-            "flex h-6 w-6 items-center justify-center rounded-full bg-zinc-800 transition-transform duration-300 ease-out",
-            !isDark && "translate-x-7 bg-gray-200"
-          )}
-        >
-          {isDark ? (
-            <Moon className="h-4 w-4 text-white" strokeWidth={1.5} />
-          ) : (
-            <Moon className="h-4 w-4 text-black" strokeWidth={1.5} />
-          )}
-        </div>
-        <div
-          className={cn(
-            "flex h-6 w-6 items-center justify-center rounded-full text-gray-500 transition-colors duration-300 ease-out",
-            !isDark && "text-gray-700 bg-gray-100"
-          )}
-        >
-          <Sun className="h-4 w-4" strokeWidth={1.5} />
-        </div>
-      </div>
-    </div>
+      <span className="ee-theme-icon ee-theme-sun" aria-hidden="true">
+        <Sun size={14} strokeWidth={1.9} />
+      </span>
+      <span className="ee-theme-icon ee-theme-moon" aria-hidden="true">
+        <Moon size={14} strokeWidth={1.9} />
+      </span>
+      <span className={`ee-theme-thumb ${isDark ? "ee-theme-thumb-right" : "ee-theme-thumb-left"}`} aria-hidden="true">
+        {isDark ? <Moon size={12} strokeWidth={2} /> : <Sun size={12} strokeWidth={2} />}
+      </span>
+      <span className="sr-only">
+        {isDark ? "Dark mode enabled" : "Light mode enabled"}
+      </span>
+    </button>
   );
 }
 

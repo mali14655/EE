@@ -1,5 +1,10 @@
 import React from 'react';
-import aliImg from '../../images/Ali.png';
+// Team member images
+import tatheerImg from '../../images/tatheer-D3U24Aas.jpeg';
+import shaheenImg from '../../images/shaheen-X734SHnd.jpeg';
+import muhammadAliImg from '../../images/Ali.png';
+import farasImg from '../../images/faras-DMTD_SZo.png';
+import haneefImg from '../../images/haneef-LMxFmg0z.jpeg';
 import {
   Search,
   FileText,
@@ -340,14 +345,52 @@ export function Testimonials() {
 
 export function Team({ limit, showExplore = false, onExploreClick }) {
   const members = [
-    { name: 'Ali', role: 'Founder & CEO', bio: 'Leads product strategy, delivery quality, and long-term client partnerships.', image: aliImg, imagePosition: 'center top', linkedin: '#', github: '#' },
-    { name: 'Sarah Ali', role: 'Head of Design', bio: 'Builds clear user journeys and high-conversion interfaces across web and mobile.', image: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=600&q=80', imagePosition: 'center', linkedin: '#', github: '#' },
-    { name: 'Usman Tariq', role: 'Engineering Lead', bio: 'Owns architecture, performance, and secure development practices for production systems.', image: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=600&q=80', imagePosition: 'center', linkedin: '#', github: '#' },
-    { name: 'Hira Noman', role: 'Project Manager', bio: 'Keeps delivery timelines, scope, and communication aligned for smooth execution.', image: 'https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&w=600&q=80', imagePosition: 'center', linkedin: '#', github: '#' },
-    { name: 'Bilal Shah', role: 'Backend Engineer', bio: 'Builds reliable APIs, secure integrations, and scalable cloud deployments.', image: 'https://images.unsplash.com/photo-1544723795-3fb6469f5b39?auto=format&fit=crop&w=600&q=80', imagePosition: 'center', linkedin: '#', github: '#' },
-    { name: 'Ayesha Noor', role: 'QA Specialist', bio: 'Ensures product quality through test planning, automation, and release checks.', image: 'https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=600&q=80', imagePosition: 'center', linkedin: '#', github: '#' },
-    { name: 'Hamza Khan', role: 'DevOps Engineer', bio: 'Maintains CI/CD pipelines and infrastructure for stable production releases.', image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=600&q=80', imagePosition: 'center', linkedin: '#', github: '#' },
-    { name: 'Zara Iqbal', role: 'Product Designer', bio: 'Designs clear, user-focused product flows that improve usability and retention.', image: 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=600&q=80', imagePosition: 'center', linkedin: '#', github: '#' },
+    {
+      name: 'Shaheen Shah',
+      role: 'Chief Executive Officer (CEO)',
+      bio: 'Leading product direction, operations, and growth across teams.',
+      image: shaheenImg,
+      imagePosition: 'center 15%',
+      // Social links intentionally hidden for now.
+      linkedin: null,
+      github: null,
+    },
+    {
+      name: 'Syed Tatheer Hussain',
+      role: 'Business Partner',
+      bio: 'Guiding strategy, partnerships, and long-term delivery alignment.',
+      image: tatheerImg,
+      imagePosition: 'center 15%',
+      linkedin: 'https://www.linkedin.com/in/tatheer-hussain/',
+      github: 'https://github.com/00tatheer00',
+    },
+    {
+      name: 'Muhammad Ali',
+      role: 'MERN Stack Developer',
+      bio: 'Building full-stack MERN features with reliable APIs and clean UI.',
+      image: muhammadAliImg,
+      imagePosition: 'center top',
+      linkedin: 'https://www.linkedin.com/in/muhammadali-dev5/',
+      github: 'https://github.com/mali14655',
+    },
+    {
+      name: 'Faras Khursheed',
+      role: 'Mobile Application Developer',
+      bio: 'Developing responsive mobile experiences with performance and usability in mind.',
+      image: farasImg,
+      imagePosition: 'center 25%' ,
+      linkedin: 'https://www.linkedin.com/in/faras-khursheed-b19b23270/',
+      github: 'https://github.com/Faras-khursheed99',
+    },
+    {
+      name: 'Muhammad Haneef Iqbal',
+      role: 'Lead Generation Specialist',
+      bio: 'Driving qualified leads through targeted campaigns, outreach, and conversion-focused strategy.',
+      image: haneefImg,
+      imagePosition: 'center 15%',
+      linkedin: 'https://www.linkedin.com/in/muhammad-haneef-iqbal-smm',
+      github: null,
+    },
   ];
   const visibleMembers = typeof limit === 'number' ? members.slice(0, limit) : members;
 
@@ -372,16 +415,32 @@ export function Team({ limit, showExplore = false, onExploreClick }) {
                   loading="lazy"
                   style={{ objectPosition: member.imagePosition }}
                 />
-                <div className="team-socials">
-                  <a className="team-social-link" href={member.linkedin} target="_blank" rel="noreferrer">
-                    <Linkedin size={14} />
-                    <span>LinkedIn</span>
-                  </a>
-                  <a className="team-social-link" href={member.github} target="_blank" rel="noreferrer">
-                    <Github size={14} />
-                    <span>GitHub</span>
-                  </a>
-                </div>
+                {(member.linkedin || member.github) && (
+                  <div className="team-socials">
+                    {member.linkedin && (
+                      <a
+                        className="team-social-link"
+                        href={member.linkedin}
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        <Linkedin size={14} />
+                        <span>LinkedIn</span>
+                      </a>
+                    )}
+                    {member.github && (
+                      <a
+                        className="team-social-link"
+                        href={member.github}
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        <Github size={14} />
+                        <span>GitHub</span>
+                      </a>
+                    )}
+                  </div>
+                )}
               </div>
               <div className="team-content">
                 <h3>{member.name}</h3>

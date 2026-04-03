@@ -68,7 +68,12 @@ export default function Footer() {
               <span>Connect</span>
             </h4>
             <div className="social-links-grid">
-              <a className="link social-link" href="#" onClick={(e) => e.preventDefault()}>
+              <a
+                className="link social-link"
+                href="http://linkedin.com/company/emergingedgetech/posts/?feedView=all"
+                target="_blank"
+                rel="noreferrer"
+              >
                 <Linkedin size={14} />
                 <span>LinkedIn</span>
               </a>

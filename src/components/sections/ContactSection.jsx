@@ -34,28 +34,50 @@ export default function ContactSection() {
     <section id="contact" className="section tinted">
       <div className="container two-col contact">
         <div className="contact-copy">
-          <p className="eyebrow">Contact us</p>
-          <h2>Let&apos;s build your project</h2>
-          <p>
-            Share your goals, timeline, and product vision. We will review your requirements and
-            respond with clear next steps within 24 hours.
-          </p>
+          <h2>Our Office</h2>
           <div className="contact-details">
             <div className="contact-detail-item">
-              <Mail size={16} />
-              <span>hello@emergingedge.tech</span>
+              <span className="contact-detail-icon" aria-hidden="true">
+                <MapPin size={18} />
+              </span>
+              <div className="contact-detail-text">
+                <h4>Visit us</h4>
+                <p className="contact-detail-value">
+                  Office 322 A, Sami Tower Ring Road, Achini Payan, Peshawar, 25000, Pakistan
+                </p>
+              </div>
             </div>
             <div className="contact-detail-item">
-              <Phone size={16} />
-              <span>+91 00000 00000</span>
+              <span className="contact-detail-icon" aria-hidden="true">
+                <Mail size={18} />
+              </span>
+              <div className="contact-detail-text">
+                <h4>Email us</h4>
+                <a className="contact-detail-value contact-detail-link" href="mailto:emergingedgetech@gmail.com">
+                  emergingedgetech@gmail.com
+                </a>
+              </div>
             </div>
             <div className="contact-detail-item">
-              <MapPin size={16} />
-              <span>Peshawar, Pakistan</span>
+              <span className="contact-detail-icon" aria-hidden="true">
+                <Phone size={18} />
+              </span>
+              <div className="contact-detail-text">
+                <h4>Call us</h4>
+                <a className="contact-detail-value contact-detail-link" href="tel:+923321992222">
+                  +92 332 1992222
+                </a>
+              </div>
             </div>
             <div className="contact-detail-item">
-              <Clock3 size={16} />
-              <span>Mon - Sat, 10:00 AM to 7:00 PM</span>
+              <span className="contact-detail-icon" aria-hidden="true">
+                <Clock3 size={18} />
+              </span>
+              <div className="contact-detail-text">
+                <h4>Office Hours</h4>
+                <p className="contact-detail-value">Monday - Friday</p>
+                <p className="contact-detail-value">9:00 AM - 5:00 PM</p>
+              </div>
             </div>
           </div>
           <div className="contact-map-wrap">
@@ -64,7 +86,7 @@ export default function ContactSection() {
               className="contact-map"
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
-              src="https://www.google.com/maps?q=Peshawar%2C%20Pakistan&z=12&output=embed"
+              src="https://maps.google.com/maps?hl=en&q=Office%20322%20A%2C%20Sami%20Tower%20Ring%20Road%2C%20Achini%20Payan%2C%20Peshawar%2C%2025000%2C%20Pakistan&t=&z=16&ie=UTF8&iwloc=B&output=embed"
             />
           </div>
         </div>
